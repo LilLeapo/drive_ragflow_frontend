@@ -1,0 +1,206 @@
+.search-page {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.search-header {
+  background: linear-gradient(135deg, #1890ff 0%, #096dd9 100%);
+  padding: 0 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-sider {
+  background: white;
+  border-right: 1px solid #f0f0f0;
+  height: calc(100vh - 64px);
+  overflow-y: auto;
+}
+
+.sider-content {
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sider-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+
+.knowledge-selector-card {
+  margin-bottom: 16px;
+}
+
+.knowledge-selector-card .ant-card-body {
+  padding: 16px;
+}
+
+.history-card .ant-card-body {
+  padding: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-item {
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #fafafa;
+}
+
+.history-item:hover {
+  background: #e6f7ff;
+  border-color: #91d5ff;
+}
+
+.history-item.active {
+  background: #e6f7ff;
+  border-color: #1890ff;
+}
+
+.history-question {
+  font-size: 14px;
+  line-height: 1.4;
+  color: #262626;
+  margin-bottom: 4px;
+}
+
+.history-time {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.search-content {
+  background: #f0f2f5;
+  padding: 24px;
+  overflow-y: auto;
+  height: calc(100vh - 64px);
+}
+
+.search-input-container {
+  max-width: 1200px;
+  margin: 0 auto 24px;
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.search-results-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .search-sider {
+    width: 280px !important;
+  }
+  
+  .sider-content {
+    padding: 20px 12px;
+  }
+}
+
+@media (max-width: 992px) {
+  .search-sider {
+    width: 260px !important;
+  }
+  
+  .header-content {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .search-content {
+    padding: 16px;
+  }
+  
+  .search-input-container {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-page .ant-layout-sider {
+    position: fixed;
+    left: -300px;
+    top: 64px;
+    z-index: 1000;
+    transition: left 0.3s ease;
+  }
+  
+  .search-page .ant-layout-sider.open {
+    left: 0;
+  }
+  
+  .search-content {
+    margin-left: 0 !important;
+    padding: 12px;
+  }
+  
+  .search-input-container {
+    padding: 12px;
+  }
+  
+  .sider-content {
+    padding: 16px 12px;
+  }
+  
+  .history-item {
+    padding: 10px;
+  }
+}
+
+/* 滚动条样式 */
+.search-sider::-webkit-scrollbar,
+.history-card .ant-card-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.search-sider::-webkit-scrollbar-track,
+.history-card .ant-card-body::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.search-sider::-webkit-scrollbar-thumb,
+.history-card .ant-card-body::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 3px;
+}
+
+.search-sider::-webkit-scrollbar-thumb:hover,
+.history-card .ant-card-body::-webkit-scrollbar-thumb:hover {
+  background: #bfbfbf;
+} 
