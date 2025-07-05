@@ -1,170 +1,380 @@
 .search-results {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 0;
 }
 
-.search-results-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-}
-
-.search-results-empty {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 60px 20px;
-}
-
-.search-answer {
+/* 答案卡片样式 */
+.answer-card {
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  background: rgba(232, 242, 251, 1);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
   border-radius: 12px;
+  border: none;
 }
 
-.answer-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 16px;
+.answer-card .ant-card-head {
+  background-color: #e6f4ff23;
+  border-bottom: 1px solid #e6f4ff;
+  border-radius: 12px 12px 0 0;
+}
+
+.answer-card .ant-card-head-title {
   color: #1890ff;
+  font-weight: 600;
 }
 
 .answer-content {
-  background: linear-gradient(135deg, #f6f9ff 0%, #e8f4ff 100%);
-  padding: 20px;
-  border-radius: 8px;
-  border-left: 4px solid #1890ff;
+  line-height: 1.8;
+  color: #262626;
+  font-size: 14px;
 }
 
-.search-chunks {
+.answer-content p {
+  margin: 0 0 12px 0;
+}
+
+.answer-content p:last-child {
+  margin-bottom: 0;
+}
+
+/* 相关文档卡片样式 */
+.documents-card {
   margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   border-radius: 12px;
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.08);
+}
+
+.documents-card .ant-card-head-title {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.documents-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.document-item {
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.document-item:hover {
+  border-color: #1890ff;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+}
+
+.document-item .ant-card-body {
+  padding: 12px 16px;
+}
+
+.document-info {
+  flex: 1;
+}
+
+.document-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 4px;
+  word-break: break-all;
+}
+
+.document-count {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+/* 内容片段样式 */
+.chunks-section {
+  margin-bottom: 24px;
 }
 
 .chunks-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin-bottom: 16px;
-  color: #52c41a;
 }
 
-.chunks-content {
-  max-height: 600px;
-  overflow-y: auto;
+.chunks-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
 }
 
-.chunk-item {
-  padding: 16px 0;
+.chunks-list {
+  background: transparent;
 }
 
-.chunk-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
+.chunks-list .ant-list-item {
+  border-bottom: none;
+  padding: 0 0 16px 0;
 }
 
-.chunk-content {
+.chunk-card {
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.chunk-card:hover {
+  border-color: #1890ff;
+  box-shadow: 0 4px 12px rgba(24, 144, 255, 0.15);
+}
+
+.chunk-card .ant-card-body {
+  padding: 16px;
+}
+
+.chunk-content-wrapper {
+  width: 100%;
+  align-items: flex-start;
+}
+
+.chunk-icon {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.chunk-content-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.chunk-highlight {
   font-size: 14px;
   line-height: 1.6;
-  color: #555;
+  color: #262626;
+  margin-bottom: 12px;
+  cursor: pointer;
+  word-break: break-word;
 }
 
-.chunk-content em {
+.chunk-highlight em {
   background-color: #fff2b8;
   padding: 2px 4px;
   border-radius: 3px;
   font-style: normal;
   font-weight: 500;
+  color: #d4380d;
 }
 
-.chunks-actions {
-  text-align: center;
-  padding: 16px 0;
-  border-top: 1px solid #f0f0f0;
-  margin-top: 16px;
+.chunk-keywords {
+  margin-bottom: 12px;
 }
 
-.document-aggs {
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
+.keyword-tag {
+  margin: 2px 4px 2px 0;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
 }
 
-.doc-aggs-content {
+.chunk-meta {
   display: flex;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid #f0f0f0;
 }
 
-.doc-tag {
-  margin: 0;
-  padding: 4px 8px;
-  border-radius: 6px;
+.document-reference {
+  cursor: pointer;
+  color: #8c8c8c;
   font-size: 12px;
+  transition: color 0.2s ease;
 }
 
-.related-questions {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  border-radius: 12px;
+.document-reference:hover {
+  color: #1890ff;
 }
 
-.related-questions-content {
+.document-reference .document-name {
+  font-size: 12px;
+  color: inherit;
+  margin-bottom: 0;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.similarity-score {
+  font-size: 12px;
+  color: #52c41a;
+  font-weight: 500;
+}
+
+/* 高亮内容弹出框样式 */
+.highlight-popover {
+  max-width: 60vw;
+  max-height: 40vh;
+  overflow: auto;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.highlight-popover::-webkit-scrollbar {
+  width: 6px;
+}
+
+.highlight-popover::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 3px;
+}
+
+.highlight-popover::-webkit-scrollbar-thumb {
+  background: #d9d9d9;
+  border-radius: 3px;
+}
+
+.highlight-popover::-webkit-scrollbar-thumb:hover {
+  background: #bfbfbf;
+}
+
+/* 分页样式 */
+.pagination-wrapper {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.pagination-wrapper .ant-pagination {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.related-question-btn {
-  text-align: left;
-  height: auto;
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: 1px solid #f0f0f0;
-  background: #fafafa;
-  transition: all 0.2s ease;
+/* 空状态样式 */
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+  padding: 40px 20px;
 }
 
-.related-question-btn:hover {
-  background: #e6f7ff;
-  border-color: #91d5ff;
-  color: #1890ff;
+.empty-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #262626;
+  margin-bottom: 8px;
 }
 
-.related-question-btn:focus {
-  background: #e6f7ff;
-  border-color: #1890ff;
-  color: #1890ff;
+.empty-subtitle {
+  font-size: 14px;
+  color: #8c8c8c;
+  line-height: 1.5;
 }
 
+/* 响应式设计 */
 @media (max-width: 768px) {
   .search-results {
-    padding: 16px;
+    padding: 0 8px;
   }
   
-  .answer-content {
-    padding: 16px;
+  .documents-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
   }
   
-  .chunk-item {
-    padding: 12px 0;
+  .chunk-card .ant-card-body {
+    padding: 12px;
   }
   
-  .chunks-content {
-    max-height: 400px;
+  .chunk-content-wrapper {
+    flex-direction: column;
+    gap: 8px;
   }
   
-  .doc-aggs-content {
-    gap: 6px;
+  .chunk-icon {
+    margin-top: 0;
   }
   
-  .related-question-btn {
-    padding: 10px 12px;
-    font-size: 14px;
+  .chunk-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
+  
+  .document-reference .document-name {
+    max-width: none;
+  }
+  
+  .highlight-popover {
+    max-width: 90vw;
+    max-height: 50vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .answer-card,
+  .documents-card {
+    margin-bottom: 16px;
+  }
+  
+  .chunks-list .ant-list-item {
+    padding: 0 0 12px 0;
+  }
+  
+  .chunk-highlight {
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  
+  .keyword-tag {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+  
+  .pagination-wrapper {
+    padding: 16px 0;
+  }
+}
+
+/* 自定义弹出框样式 */
+.chunk-popover .ant-popover-content {
+  max-width: 60vw;
+}
+
+.chunk-popover .ant-popover-inner-content {
+  max-height: 40vh;
+  overflow: auto;
+}
+
+/* 分割线样式 */
+.ant-divider {
+  margin: 24px 0;
+  border-color: #f0f0f0;
+}
+
+/* 卡片通用样式 */
+.ant-card {
+  border-radius: 8px;
+  border: 1px solid #f0f0f0;
+}
+
+.ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.ant-card-body {
+  padding: 16px;
+}
+
+/* 列表样式 */
+.ant-list {
+  background: transparent;
+}
+
+.ant-list-item {
+  border-bottom: none;
 } 

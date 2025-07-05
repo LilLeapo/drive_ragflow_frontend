@@ -1,6 +1,7 @@
 .search-page {
   min-height: 100vh;
   background: #f0f2f5;
+  position: relative;
 }
 
 .search-header {
@@ -26,15 +27,20 @@
 .search-sider {
   background: white;
   border-right: 1px solid #f0f0f0;
-  height: calc(100vh - 64px);
+  height: 100vh;
   overflow-y: auto;
+  position: relative;
+  z-index: 100;
+}
+
+.search-sider.transparent-sider {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
 }
 
 .sider-content {
   padding: 24px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  height: 100%;
 }
 
 .sider-title {
@@ -45,11 +51,19 @@
 }
 
 .knowledge-selector-card {
-  margin-bottom: 16px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.knowledge-selector-card .ant-card-head {
+  border-bottom: 1px solid #f0f0f0;
+  padding: 12px 16px;
 }
 
 .knowledge-selector-card .ant-card-body {
   padding: 16px;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 }
 
 .history-card .ant-card-body {
@@ -120,14 +134,192 @@
   width: 100%;
 }
 
+/* 主布局样式 */
+.main-layout {
+  background: #f0f2f5;
+}
+
+.main-layout-centered {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.main-layout-centered::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  opacity: 0.3;
+}
+
+/* 首次渲染内容 */
+.first-render-content {
+  height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.app-logo {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.app-icon {
+  margin-bottom: 24px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.app-name {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  font-size: 48px;
+  font-weight: 700;
+  margin: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { filter: drop-shadow(0 0 5px rgba(102, 126, 234, 0.5)); }
+  to { filter: drop-shadow(0 0 20px rgba(102, 126, 234, 0.8)); }
+}
+
+/* 搜索输入样式 */
+.search-input-wrapper {
+  width: 100%;
+  max-width: 600px;
+}
+
+.search-input-wrapper .ant-input-search {
+  border-radius: 50px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border: 2px solid transparent;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.search-input-wrapper .ant-input-search:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  transform: translateY(-2px);
+}
+
+.search-input-wrapper .ant-input-search-button {
+  border-radius: 0 50px 50px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.search-input-wrapper .ant-input-search-button:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: scale(1.05);
+}
+
+.search-input-wrapper .ant-input {
+  border: none;
+  padding: 16px 24px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.search-input-wrapper .ant-input::placeholder {
+  color: #bfbfbf;
+}
+
+/* 内容包装器 */
+.content-wrapper {
+  height: 100vh;
+  overflow-y: auto;
+  padding: 0;
+}
+
+.main-content {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* 粘性搜索框 */
+.sticky-search {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(240, 242, 245, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px 0;
+  margin-bottom: 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.sticky-search .search-input-wrapper {
+  max-width: 100%;
+}
+
+.sticky-search .ant-input-search {
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.sticky-search .ant-input-search-button {
+  border-radius: 0 12px 12px 0;
+}
+
+.sticky-search .ant-input {
+  padding: 12px 16px;
+  font-size: 14px;
+}
+
+/* 加载状态 */
+.loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 24px;
+}
+
+.loading-text {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 结果包装器 */
+.results-wrapper {
+  padding-bottom: 24px;
+}
+
 /* 响应式设计 */
 @media (max-width: 1200px) {
   .search-sider {
     width: 280px !important;
   }
   
-  .sider-content {
-    padding: 20px 12px;
+  .main-content {
+    padding: 0 16px;
   }
 }
 
@@ -136,71 +328,140 @@
     width: 260px !important;
   }
   
-  .header-content {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+  .app-name {
+    font-size: 36px;
   }
   
-  .search-content {
-    padding: 16px;
-  }
-  
-  .search-input-container {
-    padding: 16px;
+  .search-input-wrapper {
+    max-width: 500px;
   }
 }
 
 @media (max-width: 768px) {
-  .search-page .ant-layout-sider {
+  .search-sider {
     position: fixed;
     left: -300px;
-    top: 64px;
+    top: 0;
     z-index: 1000;
     transition: left 0.3s ease;
+    width: 300px !important;
   }
   
-  .search-page .ant-layout-sider.open {
+  .search-sider.open {
     left: 0;
   }
   
-  .search-content {
+  .main-layout,
+  .main-layout-centered {
     margin-left: 0 !important;
-    padding: 12px;
   }
   
-  .search-input-container {
-    padding: 12px;
+  .main-content {
+    padding: 0 12px;
+  }
+  
+  .app-name {
+    font-size: 28px;
+  }
+  
+  .search-input-wrapper {
+    max-width: 400px;
+  }
+  
+  .sticky-search {
+    padding: 12px 0;
+    margin-bottom: 16px;
+  }
+  
+  .loading-wrapper {
+    padding: 40px 20px;
+  }
+}
+
+@media (max-width: 576px) {
+  .app-name {
+    font-size: 24px;
+  }
+  
+  .search-input-wrapper {
+    max-width: 100%;
+  }
+  
+  .search-input-wrapper .ant-input {
+    padding: 12px 16px;
+    font-size: 14px;
   }
   
   .sider-content {
     padding: 16px 12px;
   }
   
-  .history-item {
-    padding: 10px;
+  .knowledge-selector-card .ant-card-body {
+    padding: 12px;
   }
 }
 
 /* 滚动条样式 */
 .search-sider::-webkit-scrollbar,
-.history-card .ant-card-body::-webkit-scrollbar {
+.knowledge-selector-card .ant-card-body::-webkit-scrollbar,
+.content-wrapper::-webkit-scrollbar {
   width: 6px;
 }
 
 .search-sider::-webkit-scrollbar-track,
-.history-card .ant-card-body::-webkit-scrollbar-track {
+.knowledge-selector-card .ant-card-body::-webkit-scrollbar-track,
+.content-wrapper::-webkit-scrollbar-track {
   background: #f0f0f0;
   border-radius: 3px;
 }
 
 .search-sider::-webkit-scrollbar-thumb,
-.history-card .ant-card-body::-webkit-scrollbar-thumb {
+.knowledge-selector-card .ant-card-body::-webkit-scrollbar-thumb,
+.content-wrapper::-webkit-scrollbar-thumb {
   background: #d9d9d9;
   border-radius: 3px;
 }
 
 .search-sider::-webkit-scrollbar-thumb:hover,
-.history-card .ant-card-body::-webkit-scrollbar-thumb:hover {
+.knowledge-selector-card .ant-card-body::-webkit-scrollbar-thumb:hover,
+.content-wrapper::-webkit-scrollbar-thumb:hover {
   background: #bfbfbf;
+}
+
+/* 动画效果 */
+.search-page * {
+  transition: all 0.2s ease;
+}
+
+/* 深色模式支持 */
+@media (prefers-color-scheme: dark) {
+  .search-page {
+    background: #141414;
+  }
+  
+  .search-sider {
+    background: #1f1f1f;
+    border-right-color: #303030;
+  }
+  
+  .search-sider.transparent-sider {
+    background: rgba(31, 31, 31, 0.95);
+  }
+  
+  .main-layout {
+    background: #141414;
+  }
+  
+  .sticky-search {
+    background: rgba(20, 20, 20, 0.95);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+  }
+  
+  .loading-wrapper {
+    background: #1f1f1f;
+  }
+  
+  .loading-text {
+    color: #bfbfbf;
+  }
 } 

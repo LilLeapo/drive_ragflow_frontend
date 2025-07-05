@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Layout, message, Spin } from 'antd';
+import { Layout, message, Spin, Card, Flex } from 'antd';
+import { SearchOutlined, DatabaseOutlined } from '@ant-design/icons';
 import SearchInput from './SearchInput.tsx';
 import SearchResults from './SearchResults.tsx';
 import KnowledgeSelector from './KnowledgeSelector.tsx';
@@ -7,7 +8,7 @@ import { useKnowledgeList, useSearch } from '../hooks/useSearch.ts';
 import { IChunk, IDocumentAgg } from '../types';
 import './SearchPage.css';
 
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const SearchPage: React.FC = () => {
   const [selectedKnowledgeIds, setSelectedKnowledgeIds] = useState<string[]>([]);
@@ -26,8 +27,9 @@ const SearchPage: React.FC = () => {
   const [pageSize] = useState(10);
   const [loading, setLoading] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState('');
+  const [isFirstRender, setIsFirstRender] = useState(true);
 
-  const { knowledgeList, loading: knowledgeLoading, error: knowledgeError } = useKnowledgeList();
+  const { error: knowledgeError } = useKnowledgeList();
   const { search } = useSearch();
 
   // 处理知识库选择
@@ -50,6 +52,7 @@ const SearchPage: React.FC = () => {
     setLoading(true);
     setCurrentQuestion(question);
     setCurrentPage(1);
+    setIsFirstRender(false);
 
     try {
       const result = await search({
@@ -146,49 +149,96 @@ const SearchPage: React.FC = () => {
     }
   }, [knowledgeError]);
 
+  // 搜索输入组件
+  const SearchInputComponent = (
+    <div className="search-input-wrapper">
+      <SearchInput 
+        onSearch={handleSearch} 
+        placeholder="请输入您的问题..."
+        size="large"
+        loading={loading}
+      />
+    </div>
+  );
+
   return (
     <Layout className="search-page">
-      <Header className="search-header">
-        <div className="header-content">
-          <h1>RAGFlow 搜索</h1>
-          <div className="search-input-container">
-            <SearchInput onSearch={handleSearch} />
-          </div>
-        </div>
-      </Header>
-
-      <Layout>
-        <Sider width={300} className="search-sider">
-          <div className="sider-content">
+      {/* 侧边栏 */}
+      <Sider 
+        width={300} 
+        className={`search-sider ${isFirstRender ? 'transparent-sider' : ''}`}
+        theme="light"
+      >
+        <div className="sider-content">
+          <Card 
+            title={
+              <Flex align="center" gap={8}>
+                <DatabaseOutlined />
+                <span>知识库选择</span>
+              </Flex>
+            }
+            className="knowledge-selector-card"
+            size="small"
+          >
             <KnowledgeSelector
               selectedKnowledgeIds={selectedKnowledgeIds}
               onSelectionChange={handleKnowledgeChange}
             />
-          </div>
-        </Sider>
+          </Card>
+        </div>
+      </Sider>
 
-        <Content className="search-content">
-          <div className="content-wrapper">
-            {loading && (
-              <div className="loading-overlay">
-                <Spin size="large" />
-                <div className="loading-text">正在搜索...</div>
+      {/* 主内容区 */}
+      <Layout className={isFirstRender ? 'main-layout-centered' : 'main-layout'}>
+        <Content>
+          {isFirstRender ? (
+            // 首次渲染 - 居中显示搜索框
+            <Flex justify="center" className="first-render-content">
+              <Flex vertical align="center" gap="large">
+                <div className="app-logo">
+                  <div className="app-icon">
+                    <SearchOutlined style={{ fontSize: '60px', color: '#1890ff' }} />
+                  </div>
+                  <h1 className="app-name">RAGFlow 搜索</h1>
+                </div>
+                {SearchInputComponent}
+              </Flex>
+            </Flex>
+          ) : (
+            // 搜索后 - 正常布局
+            <Flex className="content-wrapper">
+              <div className="main-content">
+                {/* 顶部搜索框 */}
+                <div className="sticky-search">
+                  {SearchInputComponent}
+                </div>
+
+                {/* 加载状态 */}
+                {loading && (
+                  <div className="loading-wrapper">
+                    <Spin size="large" />
+                    <div className="loading-text">正在搜索中...</div>
+                  </div>
+                )}
+
+                {/* 搜索结果 */}
+                <div className="results-wrapper">
+                  <SearchResults
+                    answer={searchResults.answer}
+                    chunks={searchResults.chunks}
+                    documents={searchResults.documents}
+                    total={searchResults.total}
+                    page={currentPage}
+                    pageSize={pageSize}
+                    onChunkClick={handleChunkClick}
+                    onDocumentClick={handleDocumentClick}
+                    onRelatedQuestionClick={handleRelatedQuestionClick}
+                    onPageChange={handlePageChange}
+                  />
+                </div>
               </div>
-            )}
-
-            <SearchResults
-              answer={searchResults.answer}
-              chunks={searchResults.chunks}
-              documents={searchResults.documents}
-              total={searchResults.total}
-              page={currentPage}
-              pageSize={pageSize}
-              onChunkClick={handleChunkClick}
-              onDocumentClick={handleDocumentClick}
-              onRelatedQuestionClick={handleRelatedQuestionClick}
-              onPageChange={handlePageChange}
-            />
-          </div>
+            </Flex>
+          )}
         </Content>
       </Layout>
     </Layout>
